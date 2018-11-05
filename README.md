@@ -1,5 +1,7 @@
 pixcnt
 ========
+[![npm version](https://badge.fury.io/js/pixcnt.svg)](https://badge.fury.io/js/pixcnt)
+
 pixiv illustration counter
 
 ## Getting Started
