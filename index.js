@@ -7,12 +7,29 @@ const createSessionCookieJar = (sessionId) => {
     return jar;
 };
 
-const getCount = async (keyword, sessionId) => {
-    const url = 'https://www.pixiv.net/search.php?s_mode=s_tag&word=' + encodeURIComponent(keyword);
+const countByTag = (tag, mode, sessionId) => {
+    return count(tag, 's_tag_full', mode, sessionId);
+};
+
+const countByKeyword = (keyword, mode, sessionId) => {
+    return count(keyword, 's_tag', mode, sessionId);
+};
+
+const count = async (word, searchMode, mode, sessionId) => {
+    let url = `https://www.pixiv.net/search.php?s_mode=${searchMode}&word=${encodeURIComponent(word)}`;
+    if (mode === 'r18' && !sessionId) {
+        return 0;
+    }
+    if (mode && mode != 'none') {
+        url += `&mode=${mode}`;
+    }
     const options = sessionId ? {jar: createSessionCookieJar(sessionId)} : {};
     const html = await http.get(url, options);
     const $ = cheerio.load(html);
     return parseInt($('.count-badge').text());
 };
 
-exports.getCount = getCount;
+module.exports = {
+    countByTag: countByTag,
+    countByKeyword: countByKeyword,
+};

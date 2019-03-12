@@ -8,10 +8,16 @@ pixiv illustration counter
 
 ```javascript
 const pixcnt = require('pixcnt');
-const cnt = await pixcnt.getCount('keyword');
 
-// or provides sessionID
-const cnt = await pixcnt.getCount('keyword', pixivSessionId);
+// mode is 'none', 'safe' or 'r18' (NOTE: mode 'r18' without sessionId always returns 0)
+const mode = 'safe';
+// [optional] session ID of pixiv 
+const sessionId = 'xxxxx_xxxx...';
+
+// count by keyword
+const cnt = await pixcnt.countByKeyword('keyword', mode, sessionId);
+// count by tag
+const cnt = await pixcnt.countByTag('tag', mode, sessionId);
 ```
 
 ## Testing
